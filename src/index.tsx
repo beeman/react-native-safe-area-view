@@ -48,7 +48,9 @@ interface State {
 // note(brentvatne): Animated.View is typed as any in @types/react-native, so
 // let's improve that a bit here
 interface AnimatedView {
-  getNode(): View;
+  measureInWindow: (
+    callback: (x: number, y: number, width: number, height: number) => void
+  ) => void;
 }
 
 export default class SafeAreaView extends React.Component<Props, State> {
@@ -104,7 +106,6 @@ export default class SafeAreaView extends React.Component<Props, State> {
     const { width: WIDTH, height: HEIGHT } = getResolvedDimensions();
 
     this._view.current
-      .getNode()
       .measureInWindow((realX, realY, winWidth, winHeight) => {
         if (!this._view.current) {
           return;
